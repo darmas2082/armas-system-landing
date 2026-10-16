@@ -1,0 +1,410 @@
+<app-navbar />
+<main class="min-h-screen bg-slate-50 px-5 py-12 md:px-8 md:py-16">
+
+  <div class="mx-auto max-w-5xl">
+
+    <!-- Encabezado -->
+    <div class="mb-10">
+      <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
+        Contacto comercial
+      </p>
+
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 md:text-5xl">
+        Cuéntanos sobre tu proyecto
+      </h1>
+
+      <p class="mt-5 max-w-2xl leading-8 text-slate-600">
+        Completa los siguientes datos para conocer tus necesidades
+        y evaluar cómo podemos ayudarte con una solución tecnológica.
+      </p>
+    </div>
+
+    <!-- Formulario -->
+    <form #contactForm="ngForm"
+          (ngSubmit)="submitForm()"
+          class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+
+      <div class="space-y-10 p-6 md:p-10">
+
+        <!-- Datos personales -->
+        <section>
+          <h2 class="text-xl font-bold text-slate-900">
+            1. Información de contacto
+          </h2>
+          <p class="mt-2 text-sm text-slate-500">
+            Necesitamos estos datos para comunicarnos contigo.
+          </p>
+
+          <div class="mt-6 grid gap-5 md:grid-cols-2">
+
+            <div>
+              <label for="fullName" class="mb-2 block text-sm font-semibold text-slate-700">
+                Nombre completo *
+              </label>
+              <input id="fullName" name="fullName"
+                     [(ngModel)]="form.fullName"
+                     #fullName="ngModel"
+                     required minlength="3"
+                     autocomplete="name"
+                     placeholder="Ej. Juan Pérez"
+                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+              @if (fullName.invalid && (fullName.touched || submitted)) {
+                <p class="mt-1 text-sm text-red-600">
+                  Ingresa tu nombre completo.
+                </p>
+              }
+            </div>
+
+            <div>
+              <label for="company" class="mb-2 block text-sm font-semibold text-slate-700">
+                Empresa
+              </label>
+              <input id="company" name="company"
+                     [(ngModel)]="form.company"
+                     autocomplete="organization"
+                     placeholder="Nombre de tu empresa"
+                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+            </div>
+
+            <div>
+              <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">
+                Correo electrónico *
+              </label>
+              <input id="email" name="email" type="email"
+                     [(ngModel)]="form.email"
+                     #email="ngModel"
+                     required email
+                     autocomplete="email"
+                     placeholder="nombre@empresa.com"
+                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+              @if (email.invalid && (email.touched || submitted)) {
+                <p class="mt-1 text-sm text-red-600">
+                  Ingresa un correo electrónico válido.
+                </p>
+              }
+            </div>
+
+            <div>
+              <label for="phone" class="mb-2 block text-sm font-semibold text-slate-700">
+                Teléfono o WhatsApp *
+              </label>
+              <input id="phone" name="phone" type="tel"
+                     [(ngModel)]="form.phone"
+                     #phone="ngModel"
+                     required minlength="7"
+                     autocomplete="tel"
+                     placeholder="Ej. +51 999 999 999"
+                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+              @if (phone.invalid && (phone.touched || submitted)) {
+                <p class="mt-1 text-sm text-red-600">
+                  Ingresa un teléfono de contacto válido.
+                </p>
+              }
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="position" class="mb-2 block text-sm font-semibold text-slate-700">
+                Cargo o función en la empresa
+              </label>
+              <input id="position" name="position"
+                     [(ngModel)]="form.position"
+                     placeholder="Ej. Gerente, administrador, emprendedor..."
+                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+            </div>
+
+          </div>
+        </section>
+
+        <div class="border-t border-slate-200"></div>
+
+        <!-- Datos del proyecto -->
+        <section>
+          <h2 class="text-xl font-bold text-slate-900">
+            2. Cuéntanos qué necesitas
+          </h2>
+          <p class="mt-2 text-sm text-slate-500">
+            Esta información nos permitirá entender mejor tu solicitud.
+          </p>
+
+          <div class="mt-6 space-y-6">
+
+            <div>
+              <label for="service" class="mb-2 block text-sm font-semibold text-slate-700">
+                Tipo de servicio *
+              </label>
+              <select id="service" name="service"
+                      [(ngModel)]="form.service"
+                      #service="ngModel"
+                      required
+                      class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                <option value="" disabled>Selecciona un servicio</option>
+                @for (item of services; track item) {
+                  <option [value]="item">{{ item }}</option>
+                }
+              </select>
+              @if (service.invalid && (service.touched || submitted)) {
+                <p class="mt-1 text-sm text-red-600">
+                  Selecciona el servicio que necesitas.
+                </p>
+              }
+            </div>
+
+            <div>
+              <label for="description" class="mb-2 block text-sm font-semibold text-slate-700">
+                Descripción del proyecto o necesidad *
+              </label>
+              <textarea id="description" name="description"
+                        [(ngModel)]="form.description"
+                        #description="ngModel"
+                        required minlength="15"
+                        rows="5"
+                        placeholder="¿Qué problema deseas resolver? ¿Qué funcionalidades necesitas? ¿Ya tienes un sistema desarrollado?"
+                        class="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
+              @if (description.invalid && (description.touched || submitted)) {
+                <p class="mt-1 text-sm text-red-600">
+                  Describe brevemente tu necesidad (mínimo 15 caracteres).
+                </p>
+              }
+            </div>
+
+            <div class="grid gap-5 md:grid-cols-2">
+
+              <div>
+                <label for="budget" class="mb-2 block text-sm font-semibold text-slate-700">
+                  Presupuesto estimado
+                </label>
+                <select id="budget" name="budget"
+                        [(ngModel)]="form.budget"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                  <option value="">Aún no lo he definido</option>
+                  <option value="Menos de S/ 2,000">Menos de S/ 2,000</option>
+                  <option value="S/ 2,000 - S/ 5,000">S/ 2,000 - S/ 5,000</option>
+                  <option value="S/ 5,000 - S/ 10,000">S/ 5,000 - S/ 10,000</option>
+                  <option value="Más de S/ 10,000">Más de S/ 10,000</option>
+                  <option value="Por definir">Prefiero conversarlo</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="startDate" class="mb-2 block text-sm font-semibold text-slate-700">
+                  ¿Cuándo te gustaría comenzar?
+                </label>
+                <select id="startDate" name="startDate"
+                        [(ngModel)]="form.startDate"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                  <option value="">Todavía no lo sé</option>
+                  <option value="Lo antes posible">Lo antes posible</option>
+                  <option value="Dentro de un mes">Dentro de un mes</option>
+                  <option value="En 1 a 3 meses">En 1 a 3 meses</option>
+                  <option value="Más adelante">Más adelante</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <div class="border-t border-slate-200"></div>
+
+        <!-- Preferencia y privacidad -->
+        <section>
+          <h2 class="text-xl font-bold text-slate-900">
+            3. Preferencias de contacto
+          </h2>
+
+          <div class="mt-5">
+            <p class="mb-3 text-sm font-semibold text-slate-700">
+              ¿Cómo prefieres que te contactemos?
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+              <label class="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                <input type="radio" name="contactPreference"
+                       [(ngModel)]="form.contactPreference"
+                       value="email" class="accent-blue-600" />
+                Correo electrónico
+              </label>
+
+              <label class="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                <input type="radio" name="contactPreference"
+                       [(ngModel)]="form.contactPreference"
+                       value="WhatsApp o teléfono" class="accent-blue-600" />
+                WhatsApp o teléfono
+              </label>
+            </div>
+          </div>
+
+          <label class="mt-6 flex cursor-pointer items-start gap-3 text-sm leading-6 text-slate-600">
+            <input type="checkbox" name="privacyAccepted"
+                   [(ngModel)]="form.privacyAccepted"
+                   #privacy="ngModel"
+                   required
+                   class="mt-1 h-4 w-4 shrink-0 accent-blue-600" />
+            <span>
+              Acepto el tratamiento de mis datos personales para atender
+              esta solicitud de contacto, conforme a la
+              <button
+                type="button"
+                (click)="openPrivacyModal()"
+                class="font-semibold text-blue-700 underline hover:text-blue-900">
+                Política de privacidad
+              </button>.
+            </span>
+          </label>
+
+          @if (privacy.invalid && (privacy.touched || submitted)) {
+            <p class="mt-2 text-sm text-red-600">
+              Debes aceptar el tratamiento de datos para continuar.
+            </p>
+          }
+        </section>
+
+      </div>
+
+      <!-- Acciones -->
+      <div class="flex flex-col gap-4 border-t border-slate-200 bg-slate-50 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-10">
+        <p class="text-sm text-slate-500">
+          * Campos obligatorios.
+        </p>
+
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a routerLink="/"
+             class="rounded-xl border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 transition hover:bg-white">
+            Cancelar
+          </a>
+
+          <button type="submit"
+                  class="rounded-xl bg-blue-700 px-7 py-3 font-bold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-200">
+            Preparar solicitud →
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-500">
+      Tu información debe utilizarse únicamente para gestionar la consulta
+      conforme a la política de privacidad aplicable.
+    </p>
+
+  </div>
+</main>
+
+@if (showPrivacyModal) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm"
+    role="presentation">
+
+    <section
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="privacy-title"
+      class="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+
+      <!-- Encabezado del popup -->
+      <header class="flex items-center justify-between gap-4 border-b border-slate-200 px-6 py-5">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-blue-600">
+            Protección de datos
+          </p>
+          <h2 id="privacy-title" class="mt-1 text-xl font-bold text-slate-900 md:text-2xl">
+            Política de privacidad
+          </h2>
+        </div>
+
+        <button
+          type="button"
+          (click)="closePrivacyModal()"
+          aria-label="Cerrar política de privacidad"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-2xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
+          ×
+        </button>
+      </header>
+
+      <!-- Contenido desplazable -->
+      <div class="overflow-y-auto px-6 py-6 text-sm leading-7 text-slate-600">
+
+        <p class="mb-5">
+          En <strong class="text-slate-900">TechConsult</strong>,
+          nos comprometemos a tratar los datos personales de manera
+          responsable y a utilizarlos para las finalidades informadas
+          en esta política.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          1. Datos personales recopilados
+        </h3>
+        <p class="mb-5">
+          A través del formulario de contacto podemos recopilar tu nombre,
+          correo electrónico, teléfono, empresa, cargo, servicio solicitado,
+          presupuesto estimado, fecha prevista de inicio y descripción
+          del proyecto.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          2. Finalidad del tratamiento
+        </h3>
+        <p class="mb-5">
+          Utilizaremos los datos para responder consultas, evaluar
+          requerimientos, preparar propuestas comerciales y comunicarnos
+          contigo respecto de los servicios solicitados.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          3. Conservación y seguridad
+        </h3>
+        <p class="mb-5">
+          Los datos se conservarán durante el tiempo necesario para atender
+          la solicitud y cumplir las obligaciones legales aplicables.
+          Se deberán adoptar medidas de seguridad adecuadas para protegerlos
+          frente a accesos, alteraciones o divulgaciones no autorizadas.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          4. Comunicación a terceros
+        </h3>
+        <p class="mb-5">
+          Los datos no deberán utilizarse para fines incompatibles con los
+          informados. Cualquier comunicación a terceros o uso de proveedores
+          que traten datos personales deberá ajustarse a la normativa aplicable
+          y contar con la base legal correspondiente.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          5. Derechos del titular
+        </h3>
+        <p class="mb-5">
+          Puedes solicitar información sobre el tratamiento de tus datos
+          y ejercer los derechos que te reconoce la normativa de protección
+          de datos personales, mediante los canales que habilite la empresa.
+        </p>
+
+        <h3 class="mb-2 font-bold text-slate-900">
+          6. Contacto y responsable
+        </h3>
+        <p class="mb-5">
+          Responsable del tratamiento: [Nombre legal o razón social].
+          Correo para consultas sobre privacidad: [Correo de privacidad].
+        </p>
+
+        <p class="rounded-xl bg-slate-50 p-4 text-xs leading-6 text-slate-500">
+          Esta política es un texto inicial de referencia. Antes de publicar,
+          completa los datos del responsable, los canales para ejercer derechos,
+          los plazos de conservación y las demás condiciones reales del
+          tratamiento de datos de tu empresa.
+        </p>
+      </div>
+
+      <!-- Pie del popup -->
+      <footer class="border-t border-slate-200 bg-slate-50 px-6 py-4">
+        <button
+          type="button"
+          (click)="closePrivacyModal()"
+          class="w-full rounded-xl bg-blue-700 px-6 py-3 font-bold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-200 sm:ml-auto sm:block sm:w-auto">
+          Cerrar
+        </button>
+      </footer>
+
+    </section>
+  </div>
+}
